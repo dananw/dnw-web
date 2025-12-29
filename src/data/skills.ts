@@ -1,0 +1,61 @@
+import { Skill } from "@/lib/types";
+
+export const skills: Skill[] = [
+  // Frontend Skills
+  { name: "JavaScript", level: 5, category: "frontend", icon: "javascript" },
+  { name: "TypeScript", level: 5, category: "frontend", icon: "typescript" },
+  { name: "React", level: 5, category: "frontend", icon: "react" },
+  { name: "Next.js", level: 5, category: "frontend", icon: "nextjs" },
+  { name: "HTML5", level: 5, category: "frontend", icon: "html5" },
+  { name: "CSS3", level: 5, category: "frontend", icon: "css3" },
+  { name: "Tailwind CSS", level: 5, category: "frontend", icon: "tailwind" },
+  { name: "Vue.js", level: 3, category: "frontend", icon: "vue" },
+  { name: "Redux Toolkit", level: 4, category: "frontend", icon: "redux" },
+  { name: "Zustand", level: 4, category: "frontend", icon: "zustand" },
+  { name: "React Query", level: 4, category: "frontend", icon: "react-query" },
+  { name: "Framer Motion", level: 4, category: "frontend", icon: "framer" },
+
+  // Backend Skills
+  { name: "Node.js", level: 5, category: "backend", icon: "nodejs" },
+  { name: "Express.js", level: 5, category: "backend", icon: "express" },
+  { name: "Nest.js", level: 5, category: "backend", icon: "nestjs" },
+  { name: "Python", level: 4, category: "backend", icon: "python" },
+  { name: "Django", level: 3, category: "backend", icon: "django" },
+  { name: "Ruby On Rails", level: 2, category: "backend", icon: "ruby" },
+  { name: "Golang", level: 3, category: "backend", icon: "golang" },
+  { name: "PostgreSQL", level: 4, category: "backend", icon: "postgresql" },
+  { name: "MongoDB", level: 4, category: "backend", icon: "mongodb" },
+  { name: "MySQL", level: 4, category: "backend", icon: "mysql" },
+  { name: "Redis", level: 4, category: "backend", icon: "redis" },
+  { name: "Prisma", level: 4, category: "backend", icon: "prisma" },
+  { name: "Drizzle ORM", level: 4, category: "backend", icon: "drizzle" },
+  { name: "REST APIs", level: 5, category: "backend", icon: "api" },
+  { name: "GraphQL", level: 3, category: "backend", icon: "graphql" },
+  { name: "Socket.io", level: 4, category: "backend", icon: "socket" },
+  { name: "OAuth", level: 4, category: "backend", icon: "oauth" },
+  { name: "JWT", level: 4, category: "backend", icon: "jwt" },
+  { name: "Docker", level: 3, category: "backend", icon: "docker" },
+
+  // Tools
+  { name: "Git", level: 5, category: "tools", icon: "git" },
+  { name: "GitHub", level: 5, category: "tools", icon: "github" },
+  { name: "VS Code", level: 5, category: "tools", icon: "vscode" },
+  { name: "Cursor", level: 5, category: "tools", icon: "cursor" },
+  { name: "Claude Code", level: 5, category: "tools", icon: "claude" },
+  { name: "npm", level: 5, category: "tools", icon: "npm" },
+  { name: "Yarn", level: 4, category: "tools", icon: "yarn" },
+  { name: "Chrome DevTools", level: 5, category: "tools", icon: "chrome" },
+  { name: "Figma", level: 3, category: "tools", icon: "figma" },
+  { name: "Jest", level: 4, category: "tools", icon: "jest" },
+  { name: "ESLint", level: 5, category: "tools", icon: "eslint" },
+  { name: "Prettier", level: 5, category: "tools", icon: "prettier" },
+
+  // Other
+  { name: "Agile/Scrum", level: 4, category: "other", icon: "agile" },
+  { name: "CI/CD", level: 4, category: "other", icon: "cicd" },
+  { name: "AWS", level: 3, category: "other", icon: "aws" },
+  { name: "GCP", level: 4, category: "other", icon: "gcp" },
+  { name: "Nginx", level: 4, category: "other", icon: "nginx" },
+  { name: "Vercel", level: 5, category: "other", icon: "vercel" },
+  { name: "Netlify", level: 5, category: "other", icon: "netlify" },
+];
