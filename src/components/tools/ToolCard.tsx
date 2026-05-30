@@ -31,6 +31,16 @@ import {
   Rows3,
   Palette,
   Contrast,
+  Lock,
+  HardDrive,
+  Globe,
+  FileLock2,
+  Barcode,
+  Box,
+  Blend,
+  Ruler,
+  RectangleHorizontal,
+  Table2,
   type LucideIcon,
 } from "lucide-react";
 import { Tool } from "@/lib/types";
@@ -69,6 +79,16 @@ const iconMap: Record<string, LucideIcon> = {
   Rows3,
   Palette,
   Contrast,
+  Lock,
+  HardDrive,
+  Globe,
+  FileLock2,
+  Barcode,
+  Box,
+  Blend,
+  Ruler,
+  RectangleHorizontal,
+  Table2,
   Wrench,
 };
 

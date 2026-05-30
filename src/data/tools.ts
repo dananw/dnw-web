@@ -282,6 +282,116 @@ export const tools: Tool[] = [
     icon: "Contrast",
     published: true,
   },
+  {
+    slug: "password-generator",
+    title: "Password Generator",
+    description:
+      "Generate strong, random passwords with adjustable length and character sets, using the Web Crypto API.",
+    tagline: "Strong random passwords, generated locally.",
+    category: "dev",
+    tags: ["password", "random", "security"],
+    icon: "Lock",
+    published: true,
+  },
+  {
+    slug: "file-size-converter",
+    title: "File Size Converter",
+    description:
+      "Convert between bytes, KB, MB, GB and their binary KiB/MiB/GiB equivalents, plus bits.",
+    tagline: "Bytes ↔ KB/MB/GB & KiB/MiB/GiB.",
+    category: "dev",
+    tags: ["bytes", "size", "convert"],
+    icon: "HardDrive",
+    published: true,
+  },
+  {
+    slug: "http-status-codes",
+    title: "HTTP Status Codes",
+    description:
+      "Search and browse HTTP status codes with their meaning and when each one is used.",
+    tagline: "Look up any HTTP status code.",
+    category: "dev",
+    tags: ["http", "status", "reference"],
+    icon: "Globe",
+    published: true,
+  },
+  {
+    slug: "chmod-calculator",
+    title: "Chmod Calculator",
+    description:
+      "Toggle Unix file permissions and read off the octal and symbolic notation, plus a ready chmod command.",
+    tagline: "Unix permissions ↔ octal & symbolic.",
+    category: "dev",
+    tags: ["chmod", "permissions", "unix"],
+    icon: "FileLock2",
+    published: true,
+  },
+  {
+    slug: "ulid-generator",
+    title: "ULID Generator",
+    description:
+      "Generate lexicographically sortable ULIDs in bulk, with cryptographically random entropy.",
+    tagline: "Sortable, unique ULIDs in bulk.",
+    category: "dev",
+    tags: ["ulid", "id", "generator"],
+    icon: "Barcode",
+    published: true,
+  },
+  {
+    slug: "box-shadow-generator",
+    title: "Box Shadow Generator",
+    description:
+      "Dial in offset, blur, spread and color with a live preview, then copy the CSS box-shadow.",
+    tagline: "Design CSS shadows with live preview.",
+    category: "design",
+    tags: ["css", "shadow", "preview"],
+    icon: "Box",
+    published: true,
+  },
+  {
+    slug: "css-gradient-generator",
+    title: "CSS Gradient Generator",
+    description:
+      "Build linear and radial gradients with multiple color stops and a live preview, then copy the CSS.",
+    tagline: "Linear & radial gradients, copy CSS.",
+    category: "design",
+    tags: ["css", "gradient", "preview"],
+    icon: "Blend",
+    published: true,
+  },
+  {
+    slug: "px-rem-converter",
+    title: "px ↔ rem Converter",
+    description:
+      "Convert between px and rem for any root font size, with a quick reference table of common values.",
+    tagline: "Convert CSS px and rem units.",
+    category: "design",
+    tags: ["css", "px", "rem"],
+    icon: "Ruler",
+    published: true,
+  },
+  {
+    slug: "aspect-ratio-calculator",
+    title: "Aspect Ratio Calculator",
+    description:
+      "Solve a missing width or height for a target aspect ratio, and simplify any ratio with handy presets.",
+    tagline: "Keep dimensions in the right ratio.",
+    category: "design",
+    tags: ["aspect", "ratio", "dimensions"],
+    icon: "RectangleHorizontal",
+    published: true,
+  },
+  {
+    slug: "csv-to-markdown",
+    title: "CSV → Markdown Table",
+    description:
+      "Convert CSV data into a GitHub-flavored Markdown table, with header and column alignment options.",
+    tagline: "Turn CSV into a Markdown table.",
+    category: "format",
+    tags: ["csv", "markdown", "table"],
+    icon: "Table2",
+    published: true,
+  },
 ];
 
 export const toolCategoryLabels: Record<ToolCategory, string> = {
