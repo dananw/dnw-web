@@ -34,20 +34,28 @@ const ChmodCalculator = () => {
     start.other = { read: true, write: false, execute: true };
     return start;
   });
+  // Raw text for the octal field so partial edits (e.g. "7", "75") are allowed;
+  // it only writes back into `perms` once it parses as a full octal value.
+  const [octalText, setOctalText] = useState(() => toOctal(perms));
   const [copied, setCopied] = useState(false);
 
   const octal = useMemo(() => toOctal(perms), [perms]);
   const symbolic = useMemo(() => toSymbolic(perms), [perms]);
   const command = `chmod ${octal} file`;
 
-  const toggle = (scope: Scope, key: keyof Triad) =>
-    setPerms((p) => ({
-      ...p,
-      [scope]: { ...p[scope], [key]: !p[scope][key] },
-    }));
+  const toggle = (scope: Scope, key: keyof Triad) => {
+    const next: Permissions = {
+      ...perms,
+      [scope]: { ...perms[scope], [key]: !perms[scope][key] },
+    };
+    setPerms(next);
+    setOctalText(toOctal(next));
+  };
 
   const onOctalChange = (v: string) => {
-    const parsed = fromOctal(v);
+    const cleaned = v.replace(/[^0-7]/g, "").slice(0, 3);
+    setOctalText(cleaned);
+    const parsed = fromOctal(cleaned);
     if (parsed.ok) setPerms(parsed.permissions);
   };
 
@@ -110,7 +118,7 @@ const ChmodCalculator = () => {
           </label>
           <input
             id="chmod-octal"
-            value={octal}
+            value={octalText}
             onChange={(e) => onOctalChange(e.target.value)}
             inputMode="numeric"
             maxLength={3}

@@ -17,7 +17,7 @@ const PxRemConverter = () => {
     setPx(v === "" ? "" : remToPx(Number(v), base));
   };
   const onBase = (v: number) => {
-    const next = v || DEFAULT_BASE;
+    const next = Number.isFinite(v) && v > 0 ? v : DEFAULT_BASE;
     setBase(next);
     // Recompute rem from the current px against the new base.
     if (px !== "") setRem(pxToRem(Number(px), next));

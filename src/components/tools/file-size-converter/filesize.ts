@@ -43,17 +43,26 @@ export function toBytes(value: number, symbol: string): ToBytesResult {
   return { ok: true, bytes: value * unit.bytes };
 }
 
-/** Trim trailing zeros while keeping up to `max` significant decimals. */
+/** Format a number with up to `max` decimals — no thousands separators or
+ *  scientific notation — trimming trailing zeros so it stays copy-friendly. */
 export function formatNumber(n: number, max = 6): string {
   if (!Number.isFinite(n)) return "—";
   if (n === 0) return "0";
   if (n >= 1) {
-    return n
-      .toLocaleString("en-US", { maximumFractionDigits: max })
-      .replace(/\.?0+$/, "");
+    return Number(n.toFixed(max)).toString();
   }
-  // Small fractions: use enough precision to stay meaningful.
-  return Number(n.toPrecision(max)).toString();
+  // Sub-1 values: keep `max` significant digits, expanded out of exponent form.
+  const rounded = Number(n.toPrecision(max));
+  if (rounded === 0) return "0";
+  let s = rounded.toString();
+  if (/e/i.test(s)) {
+    const decimals = Math.abs(Math.floor(Math.log10(rounded))) + max;
+    s = rounded
+      .toFixed(Math.min(decimals, 100))
+      .replace(/0+$/, "")
+      .replace(/\.$/, "");
+  }
+  return s;
 }
 
 export interface ConversionRow {

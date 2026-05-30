@@ -70,6 +70,7 @@ const CsvToMarkdown = () => {
                 key={a}
                 type="button"
                 onClick={() => setAlignment(a)}
+                aria-pressed={alignment === a}
                 className={`rounded-md px-2.5 py-1 font-mono text-[11px] uppercase tracking-[0.12em] capitalize transition-colors ${
                   alignment === a
                     ? "bg-accent text-accent-foreground"

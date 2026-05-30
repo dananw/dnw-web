@@ -93,8 +93,9 @@ const UlidGenerator = () => {
 
       <p className="text-sm text-muted-foreground">
         ULIDs are 26-character, Crockford base32 identifiers: a 48-bit timestamp
-        followed by 80 bits of secure randomness, so they sort by creation time.
-        Generated locally with the Web Crypto API.
+        followed by 80 bits of secure randomness, so IDs minted at different
+        times sort in chronological order. Generated locally with the Web Crypto
+        API.
       </p>
     </div>
   );

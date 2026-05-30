@@ -26,6 +26,7 @@ const HttpStatusCodes = () => {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search by code, name or meaning…"
+          aria-label="Search HTTP status codes"
           spellCheck={false}
           className="w-full rounded-lg border border-border bg-card py-3 pl-11 pr-4 font-mono text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground/60 focus:border-accent/60"
         />
@@ -38,6 +39,7 @@ const HttpStatusCodes = () => {
               key={c}
               type="button"
               onClick={() => setCls(c)}
+              aria-pressed={cls === c}
               className={`rounded-md px-3 py-1.5 font-mono text-xs uppercase tracking-[0.12em] transition-colors ${
                 cls === c
                   ? "bg-accent text-accent-foreground"

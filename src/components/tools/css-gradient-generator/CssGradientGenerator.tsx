@@ -69,6 +69,7 @@ const CssGradientGenerator = () => {
               key={t}
               type="button"
               onClick={() => setType(t)}
+              aria-pressed={cfg.type === t}
               className={`rounded-md px-3 py-1.5 font-mono text-xs uppercase tracking-[0.12em] capitalize transition-colors ${
                 cfg.type === t
                   ? "bg-accent text-accent-foreground"
@@ -114,6 +115,7 @@ const CssGradientGenerator = () => {
             <input
               value={stop.color}
               onChange={(e) => updateStop(stop.id, "color", e.target.value)}
+              aria-label="Stop color hex"
               spellCheck={false}
               className="w-28 rounded-lg border border-border bg-card px-3 py-2 font-mono text-sm text-foreground outline-none transition-colors focus:border-accent/60"
             />
