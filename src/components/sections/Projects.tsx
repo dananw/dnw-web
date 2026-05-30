@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import React from "react";
 import { projects } from "@/data/projects";
 import ProjectCard from "@/components/common/ProjectCard";
+import SectionHeading from "@/components/common/SectionHeading";
 
 const Projects = () => {
   // Sort projects by year (newest first)
@@ -19,40 +20,25 @@ const Projects = () => {
     },
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  };
-
   return (
-    <section id="projects" className="py-24">
+    <section id="projects" className="py-24 md:py-32">
       <div className="container mx-auto px-6">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={containerVariants}
-          className="max-w-6xl mx-auto"
-        >
+        <div className="max-w-6xl mx-auto">
           {/* Section Header */}
-          <motion.div variants={itemVariants} className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Featured Projects
-            </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              A selection of my recent work showcasing various technologies and
-              approaches to web development.
-            </p>
-          </motion.div>
+          <SectionHeading
+            index="02"
+            kicker="Selected Work"
+            title="Featured projects"
+            description="A selection of recent work across full-stack, frontend, and design-to-code — built for startups and enterprises worldwide."
+          />
 
           {/* Projects Grid */}
-          <motion.div variants={containerVariants} className="space-y-6">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={containerVariants}
+          >
             {sortedProjects.map((project, index) => (
               <ProjectCard
                 key={project.id}
@@ -62,7 +48,7 @@ const Projects = () => {
               />
             ))}
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

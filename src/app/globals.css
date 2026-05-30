@@ -5,48 +5,51 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 5.9% 10%;
-    --radius: 0.5rem;
+    /* Editorial Engineering — warm paper & ink, marigold accent */
+    --background: 40 30% 97%;
+    --foreground: 25 25% 12%;
+    --card: 40 33% 98%;
+    --card-foreground: 25 25% 12%;
+    --popover: 40 33% 98%;
+    --popover-foreground: 25 25% 12%;
+    --primary: 25 25% 12%;
+    --primary-foreground: 40 30% 97%;
+    --secondary: 38 22% 92%;
+    --secondary-foreground: 25 25% 12%;
+    --muted: 38 20% 93%;
+    --muted-foreground: 28 12% 42%;
+    --accent: 32 95% 50%;
+    --accent-foreground: 25 30% 10%;
+    --destructive: 0 72% 45%;
+    --destructive-foreground: 40 30% 97%;
+    --border: 32 18% 86%;
+    --input: 32 18% 86%;
+    --ring: 32 95% 50%;
+    --radius: 0.25rem;
   }
 
   .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
+    /* Ink-dominant night mode, marigold stays the accent */
+    --background: 25 18% 8%;
+    --foreground: 40 25% 92%;
+    --card: 25 16% 11%;
+    --card-foreground: 40 25% 92%;
+    --popover: 25 16% 11%;
+    --popover-foreground: 40 25% 92%;
+    --primary: 40 25% 92%;
+    --primary-foreground: 25 18% 8%;
+    --secondary: 25 12% 16%;
+    --secondary-foreground: 40 25% 92%;
+    --muted: 25 10% 17%;
+    --muted-foreground: 38 14% 62%;
+    --accent: 33 92% 54%;
+    --accent-foreground: 25 30% 10%;
+    --destructive: 0 62% 47%;
+    --destructive-foreground: 40 25% 92%;
+    --border: 30 10% 22%;
+    --input: 30 10% 22%;
+    --ring: 33 92% 54%;
+    --radius: 0.25rem;
   }
 }
 
@@ -57,6 +60,18 @@
   body {
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings: "ss01", "cv01";
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-display {
+    font-family: var(--font-display), ui-serif, Georgia, serif;
+  }
+  .font-mono {
+    font-family: var(--font-mono), ui-monospace, monospace;
   }
 }
 
@@ -76,21 +91,6 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: hsl(var(--muted-foreground) / 0.5);
-}
-
-/* Custom animations */
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
 }
 
 /* Custom utility classes */
@@ -121,10 +121,77 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* Selection color */
 ::selection {
-  background: hsl(var(--primary) / 0.2);
+  background: hsl(var(--accent) / 0.35);
   color: hsl(var(--foreground));
+}
+
+/* ── Editorial Engineering utilities ── */
+
+/* Monospace section kicker, e.g. "01 — ABOUT" */
+.kicker {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: hsl(var(--muted-foreground));
+}
+
+.kicker-accent {
+  color: hsl(var(--accent));
+}
+
+/* Amber accent text */
+.text-accent {
+  color: hsl(var(--accent));
+}
+
+/* Display headings: tighter optical sizing for editorial feel */
+.font-display {
+  font-optical-sizing: auto;
+  letter-spacing: -0.02em;
+}
+
+/* Subtle paper grain / noise overlay for atmosphere */
+.grain {
+  position: relative;
+}
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Animated accent underline for links */
+.link-underline {
+  background-image: linear-gradient(hsl(var(--accent)), hsl(var(--accent)));
+  background-size: 0% 2px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.3s ease;
+}
+.link-underline:hover {
+  background-size: 100% 2px;
 }
 
 /* Focus styles */

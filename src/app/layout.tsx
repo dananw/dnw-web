@@ -1,27 +1,48 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Fraunces, Manrope, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 
-const inter = Inter({ subsets: ["latin"] });
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+  axes: ["opsz", "SOFT", "WONK"],
+});
+
+const manrope = Manrope({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://dananwijaya.vercel.app"),
   title: "Danan Wijaya - Full Stack Developer",
-  description: "Passionate full-stack developer building exceptional web experiences with modern technologies.",
+  description:
+    "Top Rated full-stack developer with 10+ years of experience, helping startups and enterprises ship scalable web platforms across e-commerce, SaaS, and fintech.",
   keywords: ["Full Stack Developer", "Web Developer", "React", "Next.js", "TypeScript"],
   authors: [{ name: "Danan Wijaya" }],
   openGraph: {
     title: "Danan Wijaya - Full Stack Developer",
-    description: "Passionate full-stack developer building exceptional web experiences with modern technologies.",
+    description:
+      "Top Rated full-stack developer with 10+ years of experience, helping startups and enterprises ship scalable web platforms across e-commerce, SaaS, and fintech.",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
     title: "Danan Wijaya - Full Stack Developer",
-    description: "Passionate full-stack developer building exceptional web experiences with modern technologies.",
+    description:
+      "Top Rated full-stack developer with 10+ years of experience, helping startups and enterprises ship scalable web platforms across e-commerce, SaaS, and fintech.",
   },
   robots: {
     index: true,
@@ -37,7 +58,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
-      <body className={inter.className}>
+      <body
+        className={`${manrope.variable} ${fraunces.variable} ${jetbrainsMono.variable} font-sans antialiased`}
+        suppressHydrationWarning
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

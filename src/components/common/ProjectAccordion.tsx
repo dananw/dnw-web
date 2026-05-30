@@ -1,145 +1,155 @@
-import {
-  ExternalLink,
-  Github,
-  Calendar,
-  Rocket,
-} from "lucide-react";
+"use client";
+
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ExternalLink, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Project } from "@/lib/types";
 import Image from "next/image";
 
-interface ProjectCardProps {
+interface ProjectAccordionProps {
   project: Project | null;
+  index?: number;
 }
 
-const ProjectCard = ({ project }: ProjectCardProps) => {
+const ease = [0.22, 1, 0.36, 1] as const;
+
+const ProjectAccordion = ({ project, index = 0 }: ProjectAccordionProps) => {
+  const [open, setOpen] = useState(false);
 
   if (!project) {
     return (
-      <div className="border border-border rounded-lg overflow-hidden bg-card">
-        <div className="p-6">
-          <p className="text-muted-foreground">Project not found</p>
-        </div>
+      <div className="border-b border-border py-6">
+        <p className="text-muted-foreground">Project not found</p>
       </div>
     );
   }
 
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case "frontend":
-        return "bg-blue-500/10 text-blue-500 border-blue-500/20 rounded-lg px-4 py-2 font-medium text-sm";
-      case "fullstack":
-        return "bg-green-500/10 text-green-500 border-green-500/20 rounded-lg px-4 py-2 font-medium text-sm";
-      case "mobile":
-        return "bg-purple-500/10 text-purple-500 border-purple-500/20 rounded-lg px-4 py-2 font-medium text-sm";
-      default:
-        return "bg-gray-500/10 text-gray-500 border-gray-500/20 rounded-lg px-4 py-2 font-medium text-sm";
-    }
-  };
+  const num = String(index + 1).padStart(2, "0");
 
   return (
-    <div className="border border-border rounded-lg overflow-hidden bg-card">
-      <div className="p-6 space-y-6">
-        {/* Header */}
-        <div>
-          <h3 className="text-xl font-bold text-foreground mb-2">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, ease }}
+      className="group border-t border-border last:border-b"
+    >
+      {/* Trigger row */}
+      <button
+        onClick={() => setOpen((p) => !p)}
+        aria-expanded={open}
+        className="flex w-full items-center gap-4 py-6 text-left transition-colors md:gap-8"
+      >
+        <span className="font-mono text-xs text-accent">{num}</span>
+
+        <div className="flex flex-1 flex-col gap-1 md:flex-row md:items-baseline md:justify-between md:gap-6">
+          <h3 className="font-display text-2xl text-foreground transition-colors group-hover:text-accent md:text-4xl">
             {project.title}
           </h3>
-          <p className="text-muted-foreground mb-3">{project.description}</p>
-          <div className="flex items-center gap-4">
-            <Badge className={getCategoryColor(project.category)}>
-              {project.category}
-            </Badge>
-            <div className="flex items-center gap-1 text-muted-foreground">
-              <Calendar className="h-4 w-4" />
-              <span className="text-md">{project.year}</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Image Gallery */}
-        <div className="relative aspect-video rounded-lg overflow-hidden bg-muted/20">
-          {project.image ? (
-            <Image
-              src={project.image}
-              alt={`${project.title} - Preview`}
-              width={1200}
-              height={675}
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center">
-              <div className="text-center">
-                <Rocket className="h-12 w-12 mx-auto mb-2 text-muted-foreground" />
-                <p className="text-muted-foreground">Project Preview</p>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Long Description */}
-        <div>
-          <h3 className="text-lg font-semibold mb-3">Project Overview</h3>
-          <p className="text-muted-foreground leading-relaxed">
-            {project.longDescription || project.description}
+          <p className="max-w-md text-sm text-muted-foreground md:text-right">
+            {project.description}
           </p>
         </div>
 
-        {/* Features */}
-        {project.features && project.features.length > 0 && (
-          <div>
-            <h3 className="text-lg font-semibold mb-3">Key Features</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {project.features.map((feature, index) => (
-                <div key={index} className="flex items-start gap-2">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                  <span className="text-sm text-muted-foreground">
-                    {feature}
-                  </span>
+        <div className="flex items-center gap-4">
+          <span className="hidden font-mono text-xs uppercase tracking-wider text-muted-foreground sm:inline">
+            {project.category} · {project.year}
+          </span>
+          <span
+            className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full border border-border transition-all duration-300 group-hover:border-accent ${
+              open ? "rotate-45 bg-accent text-accent-foreground" : "text-foreground"
+            }`}
+          >
+            <Plus className="h-4 w-4" />
+          </span>
+        </div>
+      </button>
+
+      {/* Expandable content */}
+      <AnimatePresence initial={false}>
+        {open && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.4, ease }}
+            className="overflow-hidden"
+          >
+            <div className="grid grid-cols-1 gap-8 pb-10 lg:grid-cols-2">
+              {/* Image */}
+              <div className="relative aspect-video overflow-hidden rounded-lg border border-border bg-secondary/40">
+                {project.image && (
+                  <Image
+                    src={project.image}
+                    alt={`${project.title} preview`}
+                    width={1200}
+                    height={675}
+                    className="h-full w-full object-cover"
+                  />
+                )}
+              </div>
+
+              {/* Details */}
+              <div className="flex flex-col">
+                <p className="leading-relaxed text-muted-foreground">
+                  {project.longDescription || project.description}
+                </p>
+
+                {project.features && project.features.length > 0 && (
+                  <div className="mt-6">
+                    <p className="font-mono text-xs uppercase tracking-[0.15em] text-accent">
+                      Key Features
+                    </p>
+                    <ul className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                      {project.features.map((feature, i) => (
+                        <li key={i} className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <span className="mt-1.5 h-1 w-1 flex-shrink-0 rounded-full bg-accent" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                <div className="mt-6">
+                  <p className="font-mono text-xs uppercase tracking-[0.15em] text-accent">
+                    Stack
+                  </p>
+                  <div className="mt-3 flex flex-wrap gap-2">
+                    {project.techStack.map((tech) => (
+                      <span
+                        key={tech}
+                        className="rounded-full border border-border bg-secondary/60 px-3 py-1 font-mono text-xs text-muted-foreground"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              ))}
+
+                {project.liveUrl && (
+                  <div className="mt-8">
+                    <Button className="rounded-full" asChild>
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2"
+                      >
+                        Visit live site
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          </motion.div>
         )}
-
-        {/* Tech Stack */}
-        <div>
-          <h3 className="text-lg font-semibold mb-3">
-            Technologies Used
-          </h3>
-          <div className="flex flex-wrap gap-2">
-            {project.techStack.map((tech) => (
-              <Badge
-                key={tech}
-                variant="outline"
-                className="rounded-lg px-4 py-2"
-              >
-                {tech}
-              </Badge>
-            ))}
-          </div>
-        </div>
-
-        {/* Action Buttons */}
-        <div className="flex gap-3 pt-4">
-          {project.liveUrl && (
-            <Button asChild className="flex-1">
-              <a
-                href={project.liveUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2"
-              >
-                <ExternalLink className="h-4 w-4" />
-                Live Website
-              </a>
-            </Button>
-          )}
-        </div>
-      </div>
-    </div>
+      </AnimatePresence>
+    </motion.div>
   );
 };
 
-export default ProjectCard;
+export default ProjectAccordion;

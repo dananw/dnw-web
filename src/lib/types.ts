@@ -10,6 +10,31 @@ export interface Profile {
     twitter?: string;
     upwork?: string;
   };
+  stats?: Stat[];
+}
+
+export interface Stat {
+  label: string;
+  value: string;
+}
+
+export interface Testimonial {
+  id: string;
+  projectTitle: string;
+  date: string;
+  rating: number; // 1-5
+  quote: string;
+  client?: string;
+  source?: string;
+}
+
+export interface WorkHistoryItem {
+  id: string;
+  title: string;
+  period: string;
+  rating?: number; // 1-5, optional (some jobs have no public rating)
+  tags: string[];
+  description: string;
 }
 
 export interface Project {

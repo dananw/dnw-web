@@ -27,7 +27,7 @@ export const projects: Project[] = [
       "Streamlined score distribution for directors and publishers",
     ],
     liveUrl: "https://dimusco.com/",
-    category: "frontend",
+    category: "fullstack",
     year: 2019,
   },
   {
@@ -90,7 +90,7 @@ export const projects: Project[] = [
       "Bias-free insights with Swiss methodology and clear documentation",
     ],
     liveUrl: "https://obermatt.com/",
-    category: "frontend",
+    category: "fullstack",
     year: 2025,
   },
   {

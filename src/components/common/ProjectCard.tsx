@@ -27,18 +27,18 @@ const ProjectCard = ({
   const getCategoryColor = (category: string) => {
     switch (category) {
       case "frontend":
-        return "bg-blue-500/10 text-blue-500 border-blue-500/20";
+        return "bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-500/20";
       case "fullstack":
-        return "bg-green-500/10 text-green-500 border-green-500/20";
+        return "bg-green-500/10 text-green-700 dark:text-green-300 border-green-500/20";
       case "mobile":
-        return "bg-purple-500/10 text-purple-500 border-purple-500/20";
+        return "bg-purple-500/10 text-purple-700 dark:text-purple-300 border-purple-500/20";
       default:
-        return "bg-gray-500/10 text-gray-500 border-gray-500/20";
+        return "bg-gray-500/10 text-gray-700 dark:text-gray-300 border-gray-500/20";
     }
   };
 
   if (enableAccordion) {
-    return <ProjectAccordion project={project} />;
+    return <ProjectAccordion project={project} index={index} />;
   }
 
   return (

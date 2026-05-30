@@ -19,35 +19,24 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToProjects = (e: React.MouseEvent<HTMLAnchorElement>) => {
+  const scrollToSection = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    id: string
+  ) => {
     e.preventDefault();
-    const projectsSection = document.getElementById("projects");
-    if (projectsSection) {
-      projectsSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const scrollToContact = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    const contactSection = document.getElementById("contact");
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const scrollToAbout = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    const aboutSection = document.getElementById("about");
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: "smooth" });
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   const navigation = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/#about" },
-    { name: "Projects", href: "/#projects" },
-    { name: "Contact", href: "/#contact" },
+    { name: "Home", href: "/", sectionId: null },
+    { name: "About", href: "/#about", sectionId: "about" },
+    { name: "Projects", href: "/#projects", sectionId: "projects" },
+    { name: "Reviews", href: "/#testimonials", sectionId: "testimonials" },
+    { name: "Work", href: "/#work-history", sectionId: "work-history" },
+    { name: "Contact", href: "/#contact", sectionId: "contact" },
   ];
 
   return (
@@ -61,51 +50,40 @@ const Header = () => {
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="text-2xl font-bold text-foreground">
-            DW
+          <Link
+            href="/"
+            className="font-display text-2xl font-medium tracking-tight text-foreground"
+            aria-label="Danan Wijaya — home"
+          >
+            Danan<span className="text-accent">.</span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            {navigation.map((item) => (
-              item.name === "Projects" ? (
+          <nav className="hidden md:flex items-center gap-8">
+            {navigation.map((item, i) =>
+              item.sectionId ? (
                 <a
                   key={item.name}
                   href={item.href}
-                  onClick={scrollToProjects}
-                  className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+                  onClick={(e) => scrollToSection(e, item.sectionId!)}
+                  className="group font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground transition-colors duration-200"
                 >
-                  {item.name}
-                </a>
-              ) : item.name === "Contact" ? (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onClick={scrollToContact}
-                  className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                >
-                  {item.name}
-                </a>
-              ) : item.name === "About" ? (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onClick={scrollToAbout}
-                  className="text-muted-foreground hover:text-foreground transition-colors duration-200"
-                >
+                  <span className="text-accent/70">
+                    0{i}
+                  </span>{" "}
                   {item.name}
                 </a>
               ) : (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+                  className="font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground transition-colors duration-200"
                 >
-                  {item.name}
+                  <span className="text-accent/70">0{i}</span> {item.name}
                 </Link>
               )
-            ))}
-            <div className="ml-4">
+            )}
+            <div className="ml-2">
               <ThemeToggle />
             </div>
           </nav>
@@ -129,55 +107,31 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <nav className="md:hidden mt-4 pb-4">
-            {navigation.map((item) => (
-              item.name === "Projects" ? (
+          <nav className="md:hidden mt-4 pb-4 border-t border-border">
+            {navigation.map((item, i) =>
+              item.sectionId ? (
                 <a
                   key={item.name}
                   href={item.href}
                   onClick={(e) => {
-                    scrollToProjects(e);
+                    scrollToSection(e, item.sectionId!);
                     setIsMenuOpen(false);
                   }}
-                  className="block py-2 text-muted-foreground hover:text-foreground transition-colors duration-200"
+                  className="block py-3 font-mono text-sm uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground transition-colors duration-200"
                 >
-                  {item.name}
-                </a>
-              ) : item.name === "Contact" ? (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onClick={(e) => {
-                    scrollToContact(e);
-                    setIsMenuOpen(false);
-                  }}
-                  className="block py-2 text-muted-foreground hover:text-foreground transition-colors duration-200"
-                >
-                  {item.name}
-                </a>
-              ) : item.name === "About" ? (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onClick={(e) => {
-                    scrollToAbout(e);
-                    setIsMenuOpen(false);
-                  }}
-                  className="block py-2 text-muted-foreground hover:text-foreground transition-colors duration-200"
-                >
-                  {item.name}
+                  <span className="text-accent/70">0{i}</span> {item.name}
                 </a>
               ) : (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="block py-2 text-muted-foreground hover:text-foreground transition-colors duration-200"
+                  className="block py-3 font-mono text-sm uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground transition-colors duration-200"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  {item.name}
+                  <span className="text-accent/70">0{i}</span> {item.name}
                 </Link>
               )
-            ))}
+            )}
           </nav>
         )}
       </div>
