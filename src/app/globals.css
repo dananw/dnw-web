@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Load the v3-style config so custom theme colors (accent, primary, muted, …)
+   are generated as utilities under Tailwind v4. */
+@config "../../tailwind.config.ts";
+
 /* Custom dark variants to ensure Tailwind `dark:` utilities work reliably */
 @custom-variant dark (&:is(.dark *));
 
@@ -26,6 +30,11 @@
     --input: 32 18% 86%;
     --ring: 32 95% 50%;
     --radius: 0.25rem;
+
+    /* Fixed dark "ink" surface — does NOT invert in dark mode.
+       Used by Contact + Footer so they stay dramatic ink in both themes. */
+    --ink: 25 22% 9%;
+    --ink-foreground: 40 28% 92%;
   }
 
   .dark {

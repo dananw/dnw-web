@@ -60,3 +60,20 @@ export interface Skill {
 
 export type ProjectCategory = "frontend" | "fullstack" | "mobile";
 export type SkillCategory = "frontend" | "backend" | "tools" | "other";
+
+export type ToolCategory = "text" | "dev" | "format" | "misc";
+
+export interface Tool {
+  /** URL slug, used as /tools/<slug> */
+  slug: string;
+  title: string;
+  description: string;
+  /** Short tagline shown on the index card */
+  tagline: string;
+  category: ToolCategory;
+  tags: string[];
+  /** lucide-react icon name, resolved in the UI */
+  icon: string;
+  /** Set false to hide from the index while keeping the route */
+  published?: boolean;
+}

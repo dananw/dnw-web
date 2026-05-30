@@ -21,13 +21,16 @@ const Header = () => {
 
   const scrollToSection = (
     e: React.MouseEvent<HTMLAnchorElement>,
-    id: string
+    id: string,
+    href: string
   ) => {
-    e.preventDefault();
     const section = document.getElementById(id);
     if (section) {
+      e.preventDefault();
       section.scrollIntoView({ behavior: "smooth" });
     }
+    // If the section isn't on the current page (e.g. we're on /tools),
+    // let the browser follow the href to /#<id> normally.
   };
 
   const navigation = [
@@ -36,6 +39,7 @@ const Header = () => {
     { name: "Projects", href: "/#projects", sectionId: "projects" },
     { name: "Reviews", href: "/#testimonials", sectionId: "testimonials" },
     { name: "Work", href: "/#work-history", sectionId: "work-history" },
+    { name: "Tools", href: "/tools", sectionId: null },
     { name: "Contact", href: "/#contact", sectionId: "contact" },
   ];
 
@@ -65,7 +69,7 @@ const Header = () => {
                 <a
                   key={item.name}
                   href={item.href}
-                  onClick={(e) => scrollToSection(e, item.sectionId!)}
+                  onClick={(e) => scrollToSection(e, item.sectionId!, item.href)}
                   className="group font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground transition-colors duration-200"
                 >
                   <span className="text-accent/70">
@@ -114,7 +118,7 @@ const Header = () => {
                   key={item.name}
                   href={item.href}
                   onClick={(e) => {
-                    scrollToSection(e, item.sectionId!);
+                    scrollToSection(e, item.sectionId!, item.href);
                     setIsMenuOpen(false);
                   }}
                   className="block py-3 font-mono text-sm uppercase tracking-[0.15em] text-muted-foreground hover:text-foreground transition-colors duration-200"
