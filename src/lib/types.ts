@@ -61,7 +61,7 @@ export interface Skill {
 export type ProjectCategory = "frontend" | "fullstack" | "mobile";
 export type SkillCategory = "frontend" | "backend" | "tools" | "other";
 
-export type ToolCategory = "text" | "dev" | "format" | "misc";
+export type ToolCategory = "text" | "dev" | "format" | "design" | "misc";
 
 export interface Tool {
   /** URL slug, used as /tools/<slug> */

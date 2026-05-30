@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import ToolCard from "@/components/tools/ToolCard";
-import { publishedTools } from "@/data/tools";
+import {
+  toolsByCategory,
+  publishedTools,
+  toolCategoryLabels,
+  toolCategoryDescriptions,
+} from "@/data/tools";
 
 export const metadata: Metadata = {
   title: "Tools — Danan Wijaya",
@@ -9,7 +14,8 @@ export const metadata: Metadata = {
 };
 
 export default function ToolsPage() {
-  const items = publishedTools();
+  const groups = toolsByCategory();
+  const total = publishedTools().length;
 
   return (
     <section className="relative py-28 md:py-32">
@@ -27,11 +33,35 @@ export default function ToolsPage() {
           everything runs in your browser.
         </p>
 
-        {items.length > 0 ? (
-          <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {items.map((tool, i) => (
-              <ToolCard key={tool.slug} tool={tool} index={i} />
-            ))}
+        {total > 0 ? (
+          <div className="mt-16 space-y-16">
+            {groups.map((group, gi) => {
+              // Continuous index so the entrance animation staggers nicely
+              // across the whole page, not just within each group.
+              const offset = groups
+                .slice(0, gi)
+                .reduce((sum, g) => sum + g.items.length, 0);
+              return (
+                <div key={group.category}>
+                  <div className="mb-6 flex items-baseline justify-between gap-4 border-b border-border pb-3">
+                    <h2 className="font-display text-2xl tracking-tight text-foreground">
+                      {toolCategoryLabels[group.category]}
+                    </h2>
+                    <span className="font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">
+                      {group.items.length}
+                    </span>
+                  </div>
+                  <p className="mb-8 max-w-2xl text-sm text-muted-foreground">
+                    {toolCategoryDescriptions[group.category]}
+                  </p>
+                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                    {group.items.map((tool, i) => (
+                      <ToolCard key={tool.slug} tool={tool} index={offset + i} />
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
           </div>
         ) : (
           <p className="mt-14 text-muted-foreground">
