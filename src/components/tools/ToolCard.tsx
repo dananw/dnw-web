@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import {
   ArrowUpRight,
+  Star,
   MessageSquare,
   Wrench,
   Code2,
@@ -108,6 +109,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { Tool } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -224,7 +226,14 @@ function resolveIcon(name: string): LucideIcon {
   return iconMap[name] ?? Wrench;
 }
 
-const ToolCard = ({ tool, index }: { tool: Tool; index: number }) => {
+interface ToolCardProps {
+  tool: Tool;
+  index: number;
+  isFavorite?: boolean;
+  onToggleFavorite?: (slug: string) => void;
+}
+
+const ToolCard = ({ tool, index, isFavorite, onToggleFavorite }: ToolCardProps) => {
   const Icon = resolveIcon(tool.icon);
 
   return (
@@ -232,20 +241,18 @@ const ToolCard = ({ tool, index }: { tool: Tool; index: number }) => {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.5, ease, delay: index * 0.05 }}
+      transition={{ duration: 0.5, ease, delay: Math.min(index, 11) * 0.05 }}
+      className="group relative h-full"
     >
       <Link
         href={`/tools/${tool.slug}`}
-        className="group relative flex h-full flex-col rounded-lg border border-border bg-card p-6 transition-colors hover:border-accent/60"
+        className="flex h-full flex-col rounded-lg border border-border bg-card p-6 transition-colors hover:border-accent/60"
       >
-        <div className="flex items-start justify-between">
-          <span className="flex h-11 w-11 items-center justify-center rounded-lg border border-border bg-accent/10 text-accent">
-            <Icon className="h-5 w-5" />
-          </span>
-          <ArrowUpRight className="h-4 w-4 text-muted-foreground transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
-        </div>
+        <span className="flex h-11 w-11 items-center justify-center rounded-lg border border-border bg-accent/10 text-accent">
+          <Icon className="h-5 w-5" />
+        </span>
 
-        <h3 className="mt-5 font-display text-xl tracking-tight text-foreground">
+        <h3 className="mt-5 pr-8 font-display text-xl tracking-tight text-foreground">
           {tool.title}
         </h3>
         <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
@@ -263,6 +270,35 @@ const ToolCard = ({ tool, index }: { tool: Tool; index: number }) => {
           ))}
         </div>
       </Link>
+
+      {/* Overlay controls — siblings of the link so clicks don't navigate. */}
+      <div className="pointer-events-none absolute right-4 top-4 flex items-center gap-1.5">
+        <ArrowUpRight className="h-4 w-4 text-muted-foreground opacity-0 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent group-hover:opacity-100" />
+        {onToggleFavorite && (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onToggleFavorite(tool.slug);
+            }}
+            aria-pressed={isFavorite}
+            aria-label={
+              isFavorite
+                ? `Remove ${tool.title} from favorites`
+                : `Add ${tool.title} to favorites`
+            }
+            className="pointer-events-auto flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-accent"
+          >
+            <Star
+              className={cn(
+                "h-4 w-4 transition-colors",
+                isFavorite && "fill-accent text-accent"
+              )}
+            />
+          </button>
+        )}
+      </div>
     </motion.div>
   );
 };

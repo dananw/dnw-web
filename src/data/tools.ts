@@ -1141,16 +1141,24 @@ export const getTool = (slug: string): Tool | undefined =>
 export const publishedTools = (): Tool[] =>
   tools.filter((t) => t.published !== false);
 
+/** Published tools sorted alphabetically by title. */
+export const sortedPublishedTools = (): Tool[] =>
+  [...publishedTools()].sort((a, b) => a.title.localeCompare(b.title));
+
 /**
  * Group published tools by category, returned in `toolCategoryOrder`.
- * Empty categories are omitted.
+ * Tools within each category are sorted alphabetically by title, and empty
+ * categories are omitted. Sorting happens here (not in the registry array) so
+ * new tools can simply be appended to `tools` and still appear in order.
  */
 export function toolsByCategory(): { category: ToolCategory; items: Tool[] }[] {
   const published = publishedTools();
   return toolCategoryOrder
     .map((category) => ({
       category,
-      items: published.filter((t) => t.category === category),
+      items: published
+        .filter((t) => t.category === category)
+        .sort((a, b) => a.title.localeCompare(b.title)),
     }))
     .filter((group) => group.items.length > 0);
 }
