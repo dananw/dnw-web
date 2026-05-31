@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import ToolCard from "@/components/tools/ToolCard";
+import ToolsBrowser, { type ToolGroup } from "@/components/tools/ToolsBrowser";
 import {
   toolsByCategory,
   publishedTools,
@@ -10,12 +10,17 @@ import {
 export const metadata: Metadata = {
   title: "Tools — Danan Wijaya",
   description:
-    "A small collection of utilities I built for my own workflow. Free to use.",
+    "A collection of fast, private developer utilities — all running in your browser. Search and favorite the ones you use most.",
 };
 
 export default function ToolsPage() {
-  const groups = toolsByCategory();
   const total = publishedTools().length;
+  const groups: ToolGroup[] = toolsByCategory().map((group) => ({
+    category: group.category,
+    label: toolCategoryLabels[group.category],
+    description: toolCategoryDescriptions[group.category],
+    items: group.items,
+  }));
 
   return (
     <section className="relative py-28 md:py-32">
@@ -29,40 +34,13 @@ export default function ToolsPage() {
           Things I built for myself
         </h1>
         <p className="mt-5 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          Small utilities I use in my own workflow. No sign-up, no tracking —
-          everything runs in your browser.
+          {total} small utilities I use in my own workflow. No sign-up, no
+          tracking — everything runs in your browser. Star the ones you reach for
+          most; favorites are saved on this device.
         </p>
 
         {total > 0 ? (
-          <div className="mt-16 space-y-16">
-            {groups.map((group, gi) => {
-              // Continuous index so the entrance animation staggers nicely
-              // across the whole page, not just within each group.
-              const offset = groups
-                .slice(0, gi)
-                .reduce((sum, g) => sum + g.items.length, 0);
-              return (
-                <div key={group.category}>
-                  <div className="mb-6 flex items-baseline justify-between gap-4 border-b border-border pb-3">
-                    <h2 className="font-display text-2xl tracking-tight text-foreground">
-                      {toolCategoryLabels[group.category]}
-                    </h2>
-                    <span className="font-mono text-xs uppercase tracking-[0.15em] text-muted-foreground">
-                      {group.items.length}
-                    </span>
-                  </div>
-                  <p className="mb-8 max-w-2xl text-sm text-muted-foreground">
-                    {toolCategoryDescriptions[group.category]}
-                  </p>
-                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                    {group.items.map((tool, i) => (
-                      <ToolCard key={tool.slug} tool={tool} index={offset + i} />
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          <ToolsBrowser groups={groups} />
         ) : (
           <p className="mt-14 text-muted-foreground">
             No tools published yet. Check back soon.
